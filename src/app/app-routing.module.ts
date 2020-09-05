@@ -1,3 +1,4 @@
+import { RouteGuard } from './guard/route.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
@@ -9,7 +10,8 @@ const routes: Routes = [
   },
   {
     path: 'usermanage',
-    loadChildren: () => import('./pages/usermanage/usermanage.module').then(mod => mod.UsermanageModule)
+    loadChildren: () => import('./pages/usermanage/usermanage.module').then(mod => mod.UsermanageModule),
+    canActivate: [RouteGuard]
   },
   {
     path: '',

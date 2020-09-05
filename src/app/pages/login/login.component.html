@@ -7,14 +7,14 @@
           <mat-card-content>
                <mat-form-field class="input-field">
                     <mat-label>Username</mat-label>
-                    <input matInput [formControl]="usernameFormControl" placeholder="Ex. pat@example.com">
+                    <input [(ngModel)]="username" matInput [formControl]="usernameFormControl" placeholder="Ex. pat@example.com">
                     <mat-error *ngIf="usernameFormControl.hasError('required')">
                          Username is <strong>required</strong>
                     </mat-error>
                </mat-form-field>
                <mat-form-field class="input-field">
                     <mat-label>Password</mat-label>
-                    <input matInput [formControl]="passwordFormControl" placeholder="Ex. pat@example.com">
+                    <input [(ngModel)]="password" matInput [formControl]="passwordFormControl" placeholder="Ex. pat@example.com">
                     <mat-error *ngIf="passwordFormControl.hasError('required')">
                          Password is <strong>required</strong>
                     </mat-error>
@@ -25,5 +25,4 @@
                <button mat-raised-button style="float:right;" color="primary">Login</button>
           </mat-card-actions>
      </mat-card>
-
 </div>
