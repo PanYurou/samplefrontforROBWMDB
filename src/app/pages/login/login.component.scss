@@ -1,0 +1,13 @@
+.login-container{
+     display: flex;
+     justify-content: center;
+
+     .login-card {
+          margin-top: 50px;
+          width: 300px;
+
+          .input-field {
+               width: 100%;
+          }
+     }
+}
