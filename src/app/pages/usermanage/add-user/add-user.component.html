@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Edit User</h1>
+<div mat-dialog-content>
+     <mat-form-field>
+          <mat-label>Usernames</mat-label>
+          <input matInput [(ngModel)]="username" [formControl]="usernameFormControl" autocomplete="off">
+          <mat-error *ngIf="usernameFormControl.hasError('required')">
+               Username is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="usernameFormControl.hasError('minlength')">
+               Username must be <strong>{{usernameLength}} length</strong>
+          </mat-error>
+     </mat-form-field>
+     <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email" [formControl]="emailFormControl" autocomplete="off">
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+               Email is <strong>Required</strong>
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('email')">
+               Email wrong <strong>Format</strong>
+          </mat-error>
+     </mat-form-field>
+     <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput [(ngModel)]="password" [formControl]="passwordValidators">
+          <mat-error *ngIf="passwordValidators.hasError('required')">
+               Password is <strong>Required</strong>
+          </mat-error>
+          <mat-error *ngIf="passwordValidators.hasError('minlength')">
+               Password should be <strong>{{passLength}}</strong> Length
+          </mat-error>
+     </mat-form-field>
+     <mat-form-field>
+          <mat-label>Retype-Password</mat-label>
+          <input matInput [(ngModel)]="retypePassword">
+          <mat-error *ngIf="checkPasswordMatch()">
+               Password should be <strong>{{passLength}}</strong> Length
+          </mat-error>
+     </mat-form-field>
+</div>
+<button mat-raised-button (click)="onNoClick()">Cancel</button>
+<button mat-raised-button color="primary" (click)="onSubmit()" style="float: right;">
+     <mat-icon>add</mat-icon>
+     Add User
+</button>
