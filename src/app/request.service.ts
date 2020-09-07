@@ -1,4 +1,4 @@
-import { apiUrl } from './constants';
+import { baseURL } from './constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -14,12 +14,12 @@ export class RequestService {
 
   // Login
   httpLogin(url, params = {}): any {
-    return this.http.post(apiUrl + url, params, {});
+    return this.http.post(baseURL + url, params, {});
   }
 
   // Register
   httpRegister(url, params = {}): any {
-    return this.http.post(apiUrl + url, params, {});
+    return this.http.post(baseURL + url, params, {});
   }
 
   // get
@@ -31,21 +31,21 @@ export class RequestService {
     const headers = {
       token: localStorage.getItem(this.tokenName)
     };
-    return this.http.get(apiUrl + url + par, { headers });
+    return this.http.get(baseURL + url + par, { headers });
   }
   // post
   httpPost(url, params = {}): any {
     const headers = {
       token: localStorage.getItem(this.tokenName)
     };
-    return this.http.post(apiUrl + url, params, { headers });
+    return this.http.post(baseURL + url, params, { headers });
   }
   // put
   httpPut(url, params): any {
     const headers = {
       token: localStorage.getItem(this.tokenName)
     };
-    return this.http.put(apiUrl + url, params, { headers });
+    return this.http.put(baseURL + url, params, { headers });
   }
   // delete
   httpDelete(url): any {
@@ -53,6 +53,6 @@ export class RequestService {
       token: localStorage.getItem(this.tokenName)
     };
 
-    return this.http.delete(apiUrl + url, { headers });
+    return this.http.delete(baseURL + url, { headers });
   }
 }
