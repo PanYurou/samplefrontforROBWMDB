@@ -1,5 +1,5 @@
+import { RequestService } from './../../request.service';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
-import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EditUserComponent } from './edit-user/edit-user.component';
@@ -21,7 +21,8 @@ export class UsermanageComponent implements OnInit {
 
   email: string;
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private request: RequestService
   ) { }
 
   ngOnInit(): void {
