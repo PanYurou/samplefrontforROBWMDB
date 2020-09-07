@@ -31,6 +31,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatDialogModule,
     MatPaginatorModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' })
-  ]
+  ],
 })
 export class UsermanageModule { }
