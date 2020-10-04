@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
+import { RequestService } from 'src/app/request.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class EditUserComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EditUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private request: RequestService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,21 @@ export class EditUserComponent implements OnInit {
       alert('Check Field Erros!');
       return false;
     }else{
-      this.dialogRef.close(this.data);
+      const newData = {
+        id: this.data.id,
+        username: this.data.username,
+        email: this.data.email
+      };
+
+      this.request.httpPut('/api/v1/update_user', newData)
+      .subscribe(
+        () => {
+          this.dialogRef.close(newData);
+        },
+        error => {
+          alert(error.error.msg);
+        }
+      );
     }
   }
 

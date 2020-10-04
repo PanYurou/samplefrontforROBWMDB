@@ -1,6 +1,7 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { RequestService } from 'src/app/request.service';
 
 @Component({
   selector: 'app-add-user',
@@ -33,7 +34,8 @@ export class AddUserComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private request: RequestService
   ) { }
 
   ngOnInit(): void {
@@ -54,12 +56,19 @@ export class AddUserComponent implements OnInit {
       return false;
     }
 
-    const newData = {
-      id: 'sdfsdsdsdfsdf' + Math.floor(Math.random() * Math.floor(200)),
+    this.request.httpPost('/api/v1/add_user', {
       username: this.username,
-      email: this.email
-    };
-    this.dialogRef.close(newData);
+      email: this.email,
+      password: this.password
+    })
+    .subscribe(
+      (data: any) => {
+        this.dialogRef.close(data);
+      },
+      error => {
+        alert(error.error.msg);
+      }
+    );
   }
 
   checkField(): boolean {

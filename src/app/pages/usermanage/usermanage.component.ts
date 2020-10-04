@@ -19,13 +19,41 @@ export class UsermanageComponent implements OnInit {
     { id: 'sdfsdfsdfsdfsdfsdf3', username: 'jenuel', email: 'jenuel@gmail.com' },
   ];
 
+  page = 1;
+  limit = 5;
+  count = 0;
+
   email: string;
+
+
+  search: string;
+
   constructor(
     public dialog: MatDialog,
     private request: RequestService
-  ) { }
+  ) {
+    this.getUsers();
+  }
 
   ngOnInit(): void {
+  }
+
+  getUsers(): void {
+    this.request.httpGet('/api/v1/get_users', {
+      limit: this.limit,
+      page: this.page,
+      search: this.search ? this.search : ''
+    }).subscribe(
+      (data: any) => {
+        this.dataSource = data.data;
+        this.limit = data.limit;
+        this.page = data.page;
+        this.count = data.count;
+      },
+      error => {
+        alert(error.error.msg);
+      }
+    );
   }
 
   editUser(item: any): any {
@@ -56,11 +84,11 @@ export class UsermanageComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (!result) {
+    dialogRef.afterClosed().subscribe(id => {
+      if (!id) {
         return false;
       }
-      this.removeData(result.id);
+      this.getUsers();
     });
   }
 
@@ -75,7 +103,12 @@ export class UsermanageComponent implements OnInit {
       if (!result) {
         return false;
       }
+      if (this.dataSource.length === 5) {
+        this.dataSource.pop();
+        console.log(this.dataSource.length);
+      }
       this.dataSource = [result, ...this.dataSource];
+      this.count = this.count + 1;
     });
   }
 
@@ -90,5 +123,12 @@ export class UsermanageComponent implements OnInit {
 
   removeData(id): void {
     this.dataSource = this.dataSource.filter(obj => obj.id !== id);
+  }
+
+
+  pageChange(event): void {
+    this.page = event.pageIndex + 1;
+    this.limit = event.pageSize;
+    this.getUsers();
   }
 }
