@@ -26,9 +26,21 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     this.checkToken();
+    this.get_users();
   }
 
   ngOnInit(): void {
+  }
+
+  getUser(): void {
+    this.request.httpGet('/api/v1/get_users').subscribe(
+      (data: any) =>{
+      this.dataSource = data
+      },
+       error => {
+              console.log(error);
+      }
+    );
   }
   checkToken(): any {
     this.request.httpPost('/api/auth/check_token').subscribe(
